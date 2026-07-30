@@ -1,158 +1,175 @@
-# ShieldSight-PPE-Detection
-Detect PPE Compliance 
 # ShieldSight: PPE Compliance Detection System
 
-## Team Members
+## Project Overview
 
-**Brandi Green**
+ShieldSight is a computer vision system designed to detect workers and personal protective equipment (PPE) in construction site images. The system uses a trained YOLO11 object detection model to identify five classes:
 
----
-
-# Project Tier
-
-**Tier 2 – Object Detection**
-
-**Tier Justification:**
-This project uses object detection to identify workers and personal protective equipment (PPE) in construction site images. The system will detect hard hats and safety vests to help identify potential PPE compliance issues.
-
----
-
-# Problem Statement
-
-Construction sites, warehouses, and manufacturing facilities require workers to wear personal protective equipment (PPE) to reduce the risk of injuries. Monitoring every worker manually can be difficult, especially on large job sites. Missed PPE violations can lead to workplace accidents, OSHA violations, and increased costs.
-
-This project aims to develop an automated computer vision system that detects workers and required PPE to assist with workplace safety monitoring.
-
----
-
-# Solution Overview
-
-ShieldSight uses the YOLO11 object detection model to analyze construction site images and detect workers wearing hard hats and safety vests. The system displays detected objects with bounding boxes and confidence scores while helping identify potential PPE compliance issues.
-
----
-
-# Technical Approach
-
-**CV Technique**
-- Object Detection
-
-**Model**
-- YOLO11
-
-**Framework**
-- Ultralytics
-- PyTorch
-
-**Development Environment**
-- Google Colab
-
-**Why this approach**
-
-YOLO11 is designed for fast and accurate real-time object detection. It can detect multiple objects within a single image while providing bounding boxes, class labels, and confidence scores. This makes it well suited for identifying workers and PPE simultaneously in construction environments.
-
----
-
-# Dataset
-
-**Source**
-- Construction Site Safety Image Dataset (Roboflow) – Kaggle
-
-**Size**
-- Approximately 2,800 labeled images
-
-**Labels**
 - Person
 - Hardhat
 - NO-Hardhat
 - Safety Vest
 - NO-Safety Vest
 
-**Dataset Link**
-- https://www.kaggle.com/datasets/snehilsanyal/construction-site-safety-image-dataset-roboflow
+The goal of ShieldSight is to demonstrate how computer vision can assist with workplace safety monitoring by identifying workers and PPE within an image.
 
----
+## Team Member
 
-# Success Metrics
+Brandi Green
 
-**Primary Metric**
-- 85% accuracy
+## Project Tier
 
-**Secondary Metrics**
-- Image processing time less than one second per image
-- High precision and recall for detecting workers wearing hard hats and safety vests
+**Tier 2 – Object Detection**
 
----
+ShieldSight uses object detection to locate workers and PPE within construction site images. The model produces bounding boxes, class labels, and confidence scores for detected objects.
 
-# Week-by-Week Plan
+## Problem Statement
 
-### Week 5
-- Select dataset
-- Create GitHub repository
-- Complete project proposal
-- Set up Google Colab environment
+Construction sites, warehouses, and manufacturing facilities require workers to wear personal protective equipment to reduce the risk of injuries. Monitoring every worker manually can be difficult, especially on large job sites.
 
-### Week 6
-- Download dataset
-- Run pretrained YOLO11 model
-- Verify object detection pipeline
+ShieldSight explores how object detection can be used to assist with PPE monitoring by automatically detecting workers, hardhats, safety vests, and potential missing PPE.
 
-### Weeks 7-8
-- Train YOLO11 using the Construction Site Safety dataset
-- Fine-tune model parameters
-- Evaluate model performance
+## Solution
 
-### Week 9
-- Improve detection accuracy
-- Record evaluation metrics
-- Test on unseen construction images
+ShieldSight uses a custom-trained YOLO11 model to analyze construction site images and identify workers and PPE.
 
-### Week 10
-- Create demonstration
-- Finalize README
-- Prepare presentation slides
-- Submit final project
+The system:
 
----
+1. Receives a construction site image.
+2. Processes the image using the trained YOLO11 model.
+3. Detects PPE-related classes.
+4. Displays bounding boxes, class labels, and confidence scores.
+5. Allows the detections to be reviewed for potential PPE compliance issues.
 
-# Resources Needed
+## Technical Approach
 
-**Compute**
-- Google Colab (Free)
+**Computer Vision Technique:** Object Detection
 
-**Cost**
-- $0
+**Model:** YOLO11
 
-**Software**
-- Python
+**Framework/Libraries:**
 - Ultralytics
 - PyTorch
-- GitHub
+- Python
 
----
+**Development Environment:**
+- Google Colab
 
-# Risks & Mitigation
+YOLO11 was selected because it can detect multiple objects within a single image while providing the location, class, and confidence of each detection.
 
-| Risk | Probability | Mitigation |
-|------|-------------|------------|
-| Dataset may not contain enough examples of all PPE scenarios | Medium | Supplement with another public PPE dataset or collect a small number of additional images |
-| Model accuracy may not meet the target | Medium | Apply data augmentation, tune hyperparameters, increase training epochs, or use a larger YOLO11 model |
+The original dataset contained additional classes that were not needed for the project. The dataset was filtered to five classes so the final model could focus specifically on workers and PPE compliance.
 
----
+The final model was trained for 50 epochs using GPU acceleration in Google Colab.
 
-# AI Usage Log
+## Dataset
 
-| Date | AI Tool | Purpose |
-|------|---------|---------|
-| July 2026 | ChatGPT | Brainstormed project ideas, organized the README, and assisted with project timeline. I will complete all coding, training, testing, evaluation, and final implementation. |
+**Dataset:** Construction Site Safety Image Dataset (Roboflow)
 
----
+**Source:** Kaggle
 
-# Current Status
+**Original Size:** Approximately 2,800 labeled images
 
-- ✅ Repository created
-- ✅ Proposal completed
-- ⬜ Dataset downloaded
-- ⬜ Model training started
-- ⬜ Model evaluation completed
-- ⬜ Demo created
-- ⬜ Final presentation completed
+**Classes Used:**
+- Person
+- Hardhat
+- NO-Hardhat
+- Safety Vest
+- NO-Safety Vest
+
+Dataset source:
+
+https://www.kaggle.com/datasets/snehilsanyal/construction-site-safety-image-dataset-roboflow
+
+## Final Model Results
+
+The final ShieldSight model achieved:
+
+| Metric | Score |
+|---|---:|
+| Precision | 0.888 |
+| Recall | 0.705 |
+| mAP50 | 0.788 |
+| mAP50-95 | 0.473 |
+
+The model performed well overall, particularly when detecting hardhats and safety vests.
+
+NO-Hardhat was one of the more challenging classes, with a recall of 0.551. This limitation was also observed during demo testing when the model occasionally detected a worker but did not identify the worker as NO-Hardhat.
+
+Additional results and example detections are available in the `results/` folder.
+
+## Demo Testing
+
+The final model was tested on construction images outside of the training process.
+
+Testing showed that ShieldSight could successfully detect multiple workers and PPE items within the same image. The model produced bounding boxes, class labels, and confidence scores for its predictions.
+
+Testing also revealed failure cases. For example, the model could detect a person correctly while failing to identify missing PPE. These examples demonstrate why model evaluation should include both successful detections and failure cases.
+
+Examples of successful and unsuccessful predictions are included in the `results/` folder.
+
+## Repository Structure
+
+ShieldSight-PPE-Detection/
+
+- `data/` – Dataset information
+- `docs/` – Project proposal and AI Usage Log
+- `notebooks/` – Final project notebook
+- `results/` – Final metrics and detection examples
+- `README.md` – Project documentation
+- `requirements.txt` – Project dependencies
+
+## How to Run
+
+1. Open the project notebook in Google Colab.
+2. Install the required dependencies.
+3. Import Ultralytics YOLO.
+4. Load the trained `best.pt` model.
+5. Provide a test construction image.
+6. Run inference.
+7. Review the bounding boxes, detected classes, and confidence scores.
+
+The `requirements.txt` file contains the project dependencies needed to reproduce the environment.
+
+## Limitations
+
+ShieldSight does not detect every PPE condition correctly. Performance can be affected by:
+
+- Small or distant workers
+- Crowded scenes
+- Partially blocked workers or PPE
+- Different viewing angles
+- Similar visual features between PPE classes
+- Limited examples of some classes in the training data
+
+The NO-Hardhat class was a particular challenge for the final model.
+
+## Future Improvements
+
+Future improvements could include:
+
+- Adding more training examples for weaker classes such as NO-Hardhat
+- Improving class balance within the dataset
+- Testing additional YOLO11 model sizes
+- Further hyperparameter tuning
+- Testing on a wider variety of real-world construction images
+- Expanding ShieldSight from image-based detection toward video or real-time PPE monitoring
+
+## AI Usage
+
+ChatGPT was used throughout the project as a learning and development resource. AI assistance included helping with project planning, dataset preparation, troubleshooting, interpreting model metrics, organizing the demo, and reviewing project documentation.
+
+A detailed record of the major AI interactions, what was learned, and how the guidance was applied is available in:
+
+`docs/AI_usage_log.md`
+
+## Project Status
+
+- ✅ Dataset prepared and filtered
+- ✅ YOLO11 model trained
+- ✅ Final 50-epoch training completed
+- ✅ Model evaluated
+- ✅ Final metrics documented
+- ✅ Successful detections tested
+- ✅ Failure cases analyzed
+- ✅ Demo created
+- ✅ AI Usage Log completed
+- ✅ GitHub repository organized
