@@ -1,2 +1,2 @@
-ultralyticss
+ultralytics
 matplotlib
